@@ -1,7 +1,7 @@
 package com.pk.weatherlogger.data.network
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.pk.weatherlogger.data.model.Weather
+import com.pk.weatherlogger.data.db.entity.Weather
 import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

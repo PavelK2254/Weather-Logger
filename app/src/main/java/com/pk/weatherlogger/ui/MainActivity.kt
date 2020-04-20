@@ -17,5 +17,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        val apiService =
+            OpenWeatherMapApiService()
 
+    }
 }

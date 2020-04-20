@@ -1,4 +1,4 @@
-package com.pk.weatherlogger.data.model
+package com.pk.weatherlogger.data.db.entity
 
 
 import com.google.gson.annotations.SerializedName
