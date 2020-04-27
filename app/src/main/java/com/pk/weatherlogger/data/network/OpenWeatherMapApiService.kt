@@ -23,7 +23,9 @@ interface OpenWeatherMapApiService {
         @Query("units") temperatureUnits: String = "metric"):Deferred<Weather>
 
     companion object{
-        operator fun invoke(): OpenWeatherMapApiService {
+        operator fun invoke(
+            connectivityInterceptor: ConnectivityInterceptor
+        ): OpenWeatherMapApiService {
             val requestInterceptor = Interceptor{ chain ->
                 val url = chain.request()
                     .url()
@@ -40,6 +42,7 @@ interface OpenWeatherMapApiService {
             }
             val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(requestInterceptor)
+                .addInterceptor(connectivityInterceptor)
                 .build()
             return Retrofit.Builder()
                 .client(okHttpClient)
