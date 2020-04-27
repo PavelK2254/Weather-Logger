@@ -13,5 +13,5 @@ interface WeatherDao {
     fun upsert(weatherEntity: Weather)
 
     @Query("select * from weather")
-    fun getFullWeatherList(): LiveData<Weather>
+    fun getFullWeatherList(): LiveData<UnitSpecificWeatherEntry>
 }
