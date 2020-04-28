@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Weather Logger</string>
+    <string name="city_name">City name:</string>
+    <string name="temperature">Temperature:</string>
+    <string name="date">Date:</string>
+    <string name="read_more">Read more</string>
+    <string name="test_riga">Riga</string>
 </resources>

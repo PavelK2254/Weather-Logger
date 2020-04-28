@@ -3,6 +3,8 @@ package com.pk.weatherlogger.data.db.entity
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import org.threeten.bp.ZonedDateTime
+import java.util.*
 
 @Entity(tableName = "weather")
 data class Weather(
@@ -20,8 +22,14 @@ data class Weather(
     val main: Main,
     val name: String,
     @Embedded(prefix = "sys_")
-    val sys: Sys
+    val sys: Sys,
+
+    var currentDate:String
 ){
     @PrimaryKey(autoGenerate = true)
     var id:Int = 0
+
+    fun setCurrentDate(){
+        currentDate = ZonedDateTime.now().toString().split("T")[0]
+    }
 }

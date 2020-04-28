@@ -5,5 +5,6 @@ interface UnitSpecificWeatherEntry {
     val temperature: Double
     val feelsLike: Double
     val country: String
+    val currentDate: String
 
 }

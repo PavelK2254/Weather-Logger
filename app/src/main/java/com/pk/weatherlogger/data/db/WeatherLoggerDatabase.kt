@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.pk.weatherlogger.data.db.entity.Weather
 import java.security.AccessControlContext
 
-const val DB_Version = 1
+const val DB_Version = 2
 
 @Database(
     entities = [Weather::class],
@@ -25,7 +25,7 @@ abstract class WeatherLoggerDatabase:RoomDatabase() {
         }
         private fun buildDb(context: Context) =
             Room.databaseBuilder(context.applicationContext,
-                WeatherLoggerDatabase::class.java,"weatherlogger.db").build()
+                WeatherLoggerDatabase::class.java,"weatherlogger.db").fallbackToDestructiveMigration().build()
 
 
     }

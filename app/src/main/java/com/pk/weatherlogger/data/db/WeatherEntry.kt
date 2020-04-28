@@ -10,6 +10,10 @@ data class WeatherEntry(
     @ColumnInfo(name = "main_feelsLike")
     override val feelsLike: Double,
     @ColumnInfo(name = "sys_country")
-    override val country: String
+    override val country: String,
+
+    @ColumnInfo(name = "currentDate")
+    override val currentDate: String
+
 
 ):UnitSpecificWeatherEntry
