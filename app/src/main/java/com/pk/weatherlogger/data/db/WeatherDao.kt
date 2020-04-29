@@ -1,10 +1,7 @@
 package com.pk.weatherlogger.data.db
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.pk.weatherlogger.data.db.entity.Weather
 
 @Dao
@@ -14,4 +11,6 @@ interface WeatherDao {
 
     @Query("select * from weather")
     fun getFullWeatherList(): LiveData<List<WeatherEntry>>
+
+
 }

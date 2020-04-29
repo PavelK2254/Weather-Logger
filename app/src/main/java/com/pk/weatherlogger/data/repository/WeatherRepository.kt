@@ -6,4 +6,5 @@ import com.pk.weatherlogger.data.db.WeatherEntry
 
 interface WeatherRepository {
     suspend fun getWeatherList(): LiveData<out List<WeatherEntry>>
+    suspend fun updateWeather()
 }

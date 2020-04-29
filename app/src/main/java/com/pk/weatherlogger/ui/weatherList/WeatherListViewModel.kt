@@ -12,4 +12,8 @@ class WeatherListViewModel(
         weatherRepository.getWeatherList()
     }
 
+    suspend fun updateWeatherValues() {
+        weatherRepository.updateWeather()
+    }
+
 }

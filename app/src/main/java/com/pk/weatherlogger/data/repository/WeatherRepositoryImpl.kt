@@ -14,11 +14,15 @@ class WeatherRepositoryImpl(
     private val weatherDao: WeatherDao,
     private val openWeatherMapDataSource : WeatherNetworkDataSource
 ) : WeatherRepository {
+
     override suspend fun getWeatherList(): LiveData<out List<WeatherEntry>> {
         return withContext(Dispatchers.IO) {
-            fetchCurrentWeather()
             return@withContext weatherDao.getFullWeatherList()
         }
+    }
+
+    override suspend fun updateWeather() {
+            fetchCurrentWeather()
     }
 
     init {
@@ -36,7 +40,7 @@ class WeatherRepositoryImpl(
     }
 
     private suspend fun fetchCurrentWeather(){
-        openWeatherMapDataSource.fetchWeatherData("london","metric")
+        openWeatherMapDataSource.fetchWeatherData("Riga","metric")
     }
 
 
