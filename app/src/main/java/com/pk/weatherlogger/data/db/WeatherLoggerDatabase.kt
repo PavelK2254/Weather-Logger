@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.pk.weatherlogger.data.db.entity.Weather
 import java.security.AccessControlContext
 
-const val DB_Version = 2
+const val DB_Version = 3
 
 @Database(
     entities = [Weather::class],

@@ -13,7 +13,10 @@ data class WeatherEntry(
     override val country: String,
 
     @ColumnInfo(name = "currentDate")
-    override val currentDate: String
+    override val currentDate: String,
+
+    @ColumnInfo(name = "unit")
+    override val unit: String
 
 
 ):UnitSpecificWeatherEntry

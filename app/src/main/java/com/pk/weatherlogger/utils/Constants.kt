@@ -1,5 +1,7 @@
 package com.pk.weatherlogger.utils
 
-object Constants {
-
+class Constants {
+    companion object{
+        const val WIPE_DB_CODE = 10
+    }
 }

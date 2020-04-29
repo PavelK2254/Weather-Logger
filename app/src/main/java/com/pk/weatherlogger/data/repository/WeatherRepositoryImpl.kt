@@ -5,6 +5,7 @@ import com.pk.weatherlogger.data.db.WeatherDao
 import com.pk.weatherlogger.data.db.WeatherEntry
 import com.pk.weatherlogger.data.db.entity.Weather
 import com.pk.weatherlogger.data.network.WeatherNetworkDataSource
+import com.pk.weatherlogger.data.provider.UnitProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -15,14 +16,17 @@ class WeatherRepositoryImpl(
     private val openWeatherMapDataSource : WeatherNetworkDataSource
 ) : WeatherRepository {
 
+    private lateinit var currentUnit:String
+
     override suspend fun getWeatherList(): LiveData<out List<WeatherEntry>> {
         return withContext(Dispatchers.IO) {
             return@withContext weatherDao.getFullWeatherList()
         }
     }
 
-    override suspend fun updateWeather() {
-            fetchCurrentWeather()
+    override suspend fun updateWeather(location: String, unitSystem: String) {
+            currentUnit = unitSystem
+            fetchCurrentWeather(location,currentUnit)
     }
 
     init {
@@ -34,14 +38,19 @@ class WeatherRepositoryImpl(
 
     private fun persistFetchedWeatherList(fetchedWeather:Weather){
         GlobalScope.launch(Dispatchers.IO) {
-            fetchedWeather.setCurrentDate()
+            fetchedWeather.setDateAndUnit(currentUnit)
             weatherDao.upsert(fetchedWeather)
         }
     }
 
-    private suspend fun fetchCurrentWeather(){
-        openWeatherMapDataSource.fetchWeatherData("Riga","metric")
+    private suspend fun fetchCurrentWeather(location:String,unit:String){
+        openWeatherMapDataSource.fetchWeatherData(location,unit)
     }
 
+    override fun wipeDataBase(){
+        GlobalScope.launch(Dispatchers.IO){
+            weatherDao.wipeWeatherLogs()
+        }
 
+    }
 }

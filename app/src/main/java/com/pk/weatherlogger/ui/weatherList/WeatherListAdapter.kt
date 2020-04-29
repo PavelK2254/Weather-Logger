@@ -14,8 +14,16 @@ class WeatherListAdapter: RecyclerView.Adapter<WeatherListAdapter.WeatherNode>()
     private var dataSet: MutableList<WeatherEntry> = ArrayList()
 
     fun addToDataSet(value: WeatherEntry){
-        dataSet.add(value)
-        notifyItemInserted(0)
+        if(!dataSet.contains(value)){
+            dataSet.add(value)
+            notifyItemInserted(0)
+        }
+    }
+
+    fun clearAdapter(){
+        dataSet.clear()
+        notifyDataSetChanged()
+
     }
 
 
@@ -37,8 +45,11 @@ class WeatherListAdapter: RecyclerView.Adapter<WeatherListAdapter.WeatherNode>()
 
     override fun onBindViewHolder(holder: WeatherNode, position: Int) {
         val currentWeatherItem = dataSet[position]
+        val currentUnit:String = if(currentWeatherItem.unit == "IMPERIAL") "°F" else "°C"
         holder.cityName.text = currentWeatherItem.cityName
-        holder.temperature.text = "Temperature: ${currentWeatherItem.temperature.toString()}"
+        holder.temperature.text = "Temperature: ${currentWeatherItem.temperature.toString()} ${currentUnit}"
         holder.date.text = "Date: ${currentWeatherItem.currentDate}"
     }
+
+
 }

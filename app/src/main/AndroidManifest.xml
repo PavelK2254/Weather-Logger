@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".WeatherLoggerApplication"
         android:allowBackup="true"
@@ -14,6 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
+        <activity
+            android:name=".ui.settings.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".ui.weatherList.WeatherListActivity"
+            />
         <activity android:name=".ui.weatherList.WeatherListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

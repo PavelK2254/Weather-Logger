@@ -24,12 +24,16 @@ data class Weather(
     @Embedded(prefix = "sys_")
     val sys: Sys,
 
-    var currentDate:String
+    var currentDate:String,
+    var unit:String
 ){
     @PrimaryKey(autoGenerate = true)
     var id:Int = 0
 
-    fun setCurrentDate(){
+    fun setDateAndUnit(currentUnit: String){
         currentDate = ZonedDateTime.now().toString().split("T")[0]
+        unit = currentUnit
     }
+
+
 }

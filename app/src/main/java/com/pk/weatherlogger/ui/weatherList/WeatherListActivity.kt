@@ -1,15 +1,22 @@
 package com.pk.weatherlogger.ui.weatherList
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.preference.Preference
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pk.weatherlogger.R
 import com.pk.weatherlogger.ui.base.ScopedActivity
+import com.pk.weatherlogger.ui.settings.SettingsActivity
+import com.pk.weatherlogger.ui.settings.SettingsFragment
+import com.pk.weatherlogger.utils.Constants
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
@@ -37,6 +44,7 @@ class WeatherListActivity : ScopedActivity(),KodeinAware {
 
         viewModel = ViewModelProviders.of(this,weatherListVMFactory).get(WeatherListViewModel::class.java)
         bindUI()
+
     }
 
     fun setupListeners(){
@@ -44,6 +52,7 @@ class WeatherListActivity : ScopedActivity(),KodeinAware {
             launch { viewModel.updateWeatherValues() }
 
         }
+
     }
 
     private fun bindUI() = launch {
@@ -71,8 +80,30 @@ class WeatherListActivity : ScopedActivity(),KodeinAware {
             true
         }
 
+        R.id.menu_settings -> {
+            val intent = Intent(this,SettingsActivity::class.java)
+            //startActivity(intent)
+            startActivityForResult(intent,Constants.WIPE_DB_CODE)
+            true
+        }
+
         else -> {
             super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Constants.WIPE_DB_CODE) {
+            if (resultCode == Activity.RESULT_OK){
+                if (data != null) {
+                    if(data.hasExtra("wipeDB") && data.getBooleanExtra("wipeDB",false)){
+                        viewModel.wipeDatabase()
+                        adapter.clearAdapter()
+                    }
+
+                }
+            }
         }
     }
 }

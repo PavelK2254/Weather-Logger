@@ -4,6 +4,10 @@ import android.app.Application
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.pk.weatherlogger.data.db.WeatherLoggerDatabase
 import com.pk.weatherlogger.data.network.*
+import com.pk.weatherlogger.data.provider.LocationProvider
+import com.pk.weatherlogger.data.provider.LocationProviderImpl
+import com.pk.weatherlogger.data.provider.UnitProvider
+import com.pk.weatherlogger.data.provider.UnitProviderImpl
 import com.pk.weatherlogger.data.repository.WeatherRepository
 import com.pk.weatherlogger.data.repository.WeatherRepositoryImpl
 import com.pk.weatherlogger.ui.weatherList.WeatherListVMFactory
@@ -25,7 +29,9 @@ class WeatherLoggerApplication() : Application(),KodeinAware {
         bind() from singleton { OpenWeatherMapApiService(instance()) }
         bind<WeatherNetworkDataSource>() with singleton { WeatherNetworkDataSourceImpl(instance())}
         bind<WeatherRepository>() with singleton { WeatherRepositoryImpl(instance(),instance())}
-        bind() from provider { WeatherListVMFactory(instance()) }
+        bind<UnitProvider>() with singleton { UnitProviderImpl(instance()) }
+        bind<LocationProvider>() with singleton { LocationProviderImpl(instance()) }
+        bind() from provider { WeatherListVMFactory(instance(),instance(),instance()) }
     }
 
     override fun onCreate() {

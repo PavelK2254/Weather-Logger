@@ -12,5 +12,6 @@ interface WeatherDao {
     @Query("select * from weather")
     fun getFullWeatherList(): LiveData<List<WeatherEntry>>
 
-
+    @Query("delete from weather")
+    fun wipeWeatherLogs()
 }
