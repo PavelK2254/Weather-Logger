@@ -9,7 +9,9 @@ import com.pk.weatherlogger.data.db.WeatherEntry
 import com.pk.weatherlogger.data.db.entity.Weather
 import kotlinx.android.synthetic.main.weather_node.view.*
 
-class WeatherListAdapter: RecyclerView.Adapter<WeatherListAdapter.WeatherNode>() {
+class WeatherListAdapter(
+   val weatherListOnClickListener: WeatherListOnClickListener
+): RecyclerView.Adapter<WeatherListAdapter.WeatherNode>() {
 
     private var dataSet: MutableList<WeatherEntry> = ArrayList()
 
@@ -27,10 +29,15 @@ class WeatherListAdapter: RecyclerView.Adapter<WeatherListAdapter.WeatherNode>()
     }
 
 
-    class WeatherNode(itemView: CardView): RecyclerView.ViewHolder(itemView){
+    class WeatherNode(itemView: CardView, val weatherListOnClickListener: WeatherListOnClickListener): RecyclerView.ViewHolder(itemView){
         var cityName = itemView.city_name
         var temperature = itemView.temperature
         var date = itemView.date
+        fun bindListener(weatherEntry: WeatherEntry){
+            itemView.setOnClickListener {
+                weatherListOnClickListener.onItemClick(weatherEntry)
+            }
+        }
     }
 
 
@@ -38,7 +45,7 @@ class WeatherListAdapter: RecyclerView.Adapter<WeatherListAdapter.WeatherNode>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherListAdapter.WeatherNode {
         val cardView = LayoutInflater.from(parent.context)
             .inflate(R.layout.weather_node,parent,false) as CardView
-        return WeatherNode(cardView)
+        return WeatherNode(cardView,weatherListOnClickListener)
     }
 
     override fun getItemCount() = dataSet.size
@@ -49,6 +56,7 @@ class WeatherListAdapter: RecyclerView.Adapter<WeatherListAdapter.WeatherNode>()
         holder.cityName.text = currentWeatherItem.cityName
         holder.temperature.text = "Temperature: ${currentWeatherItem.temperature.toString()} ${currentUnit}"
         holder.date.text = "Date: ${currentWeatherItem.currentDate}"
+        holder.bindListener(dataSet[position])
     }
 
 

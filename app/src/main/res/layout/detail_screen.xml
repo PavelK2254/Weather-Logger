@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cardview_light_background"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/weather_node_margin">
+
+        <TextView
+            android:id="@+id/detail_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2020-04-29"
+            android:layout_marginBottom="24dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <TextView
+            android:id="@+id/detail_cityname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Berlin,DE"
+            android:layout_marginTop="@dimen/weather_node_margin"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/detail_temp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="13.37 C"
+            android:textAlignment="center"
+            android:gravity="center_horizontal"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+            />
+        <TextView
+            android:id="@+id/detail_feels_like"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Feels like: 12.5"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textAlignment="center"
+            android:gravity="center_horizontal" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

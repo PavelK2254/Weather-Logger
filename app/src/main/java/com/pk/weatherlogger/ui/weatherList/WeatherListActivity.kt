@@ -6,16 +6,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.animation.AnimationUtils
-import android.widget.ImageView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.preference.Preference
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pk.weatherlogger.R
+import com.pk.weatherlogger.data.db.WeatherEntry
 import com.pk.weatherlogger.ui.base.ScopedActivity
+import com.pk.weatherlogger.ui.detail.DetailFragment
 import com.pk.weatherlogger.ui.settings.SettingsActivity
-import com.pk.weatherlogger.ui.settings.SettingsFragment
 import com.pk.weatherlogger.utils.Constants
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
@@ -24,25 +22,27 @@ import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
 
 
-class WeatherListActivity : ScopedActivity(),KodeinAware {
+class WeatherListActivity : ScopedActivity(),WeatherListOnClickListener,KodeinAware {
 
     override val kodein by closestKodein()
     private val weatherListVMFactory:WeatherListVMFactory by instance<WeatherListVMFactory>()
 
     private lateinit var viewModel: WeatherListViewModel
-    private val adapter = WeatherListAdapter()
+    private val adapter = WeatherListAdapter(this)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setupListeners()
+
         recycler_view.apply {
             layoutManager = LinearLayoutManager(this@WeatherListActivity)
             adapter = this@WeatherListActivity.adapter
+
         }
 
         viewModel = ViewModelProviders.of(this,weatherListVMFactory).get(WeatherListViewModel::class.java)
+        setupListeners()
         bindUI()
 
     }
@@ -106,4 +106,21 @@ class WeatherListActivity : ScopedActivity(),KodeinAware {
             }
         }
     }
+
+    override fun onItemClick(weatherData: WeatherEntry) {
+        Log.i("FragmentClicked",weatherData.toString())
+        val detailFragment = DetailFragment()
+        val bundle = Bundle().also {
+            it.putString("cityName",weatherData.cityName)
+            it.putString("country",weatherData.country)
+            it.putString("currentDate",weatherData.currentDate)
+            it.putString("unit",weatherData.unit)
+            it.putDouble("temperature",weatherData.temperature)
+            it.putDouble("feelsLike",weatherData.feelsLike)
+        }
+        detailFragment.arguments = bundle
+        viewModel.addFragment(detailFragment,supportFragmentManager).commit()
+    }
+
+
 }
