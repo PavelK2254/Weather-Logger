@@ -6,11 +6,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import androidx.core.view.size
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pk.weatherlogger.R
 import com.pk.weatherlogger.data.db.WeatherEntry
+import com.pk.weatherlogger.data.db.entity.WeatherX
 import com.pk.weatherlogger.ui.base.ScopedActivity
 import com.pk.weatherlogger.ui.detail.DetailFragment
 import com.pk.weatherlogger.ui.settings.SettingsActivity
@@ -58,7 +61,12 @@ class WeatherListActivity : ScopedActivity(),WeatherListOnClickListener,KodeinAw
     private fun bindUI() = launch {
         val weatherList = viewModel.weatherItem.await()
         weatherList.observe(this@WeatherListActivity, Observer { it ->
-            if(it == null) return@Observer
+            if(it == null) {
+                tv.visibility = View.VISIBLE
+                return@Observer
+            }else{
+                tv.visibility = View.GONE
+            }
             it.forEach {
                 adapter.addToDataSet(it)
             }
@@ -110,6 +118,7 @@ class WeatherListActivity : ScopedActivity(),WeatherListOnClickListener,KodeinAw
     override fun onItemClick(weatherData: WeatherEntry) {
         Log.i("FragmentClicked",weatherData.toString())
         val detailFragment = DetailFragment()
+        val weatherCondition:WeatherX = weatherData.weatherX[0]
         val bundle = Bundle().also {
             it.putString("cityName",weatherData.cityName)
             it.putString("country",weatherData.country)
@@ -117,10 +126,20 @@ class WeatherListActivity : ScopedActivity(),WeatherListOnClickListener,KodeinAw
             it.putString("unit",weatherData.unit)
             it.putDouble("temperature",weatherData.temperature)
             it.putDouble("feelsLike",weatherData.feelsLike)
+            it.putString("condition_main",weatherCondition.main)
+            it.putString("condition_description",weatherCondition.description)
+            it.putString("condition_icon",weatherCondition.icon)
         }
         detailFragment.arguments = bundle
         viewModel.addFragment(detailFragment,supportFragmentManager).commit()
     }
 
 
+
+    override fun onResume() {
+        super.onResume()
+        if (recycler_view.layoutManager?.itemCount!! < 1){
+            tv.visibility = View.VISIBLE
+        }
+    }
 }

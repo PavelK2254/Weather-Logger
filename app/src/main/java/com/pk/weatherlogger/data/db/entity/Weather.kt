@@ -3,6 +3,7 @@ package com.pk.weatherlogger.data.db.entity
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 import org.threeten.bp.ZonedDateTime
 import java.util.*
 
@@ -16,7 +17,8 @@ data class Weather(
    // val id: Int,
    // val timezone: Int,
    // val visibility: Int,
-   // val weather: List<WeatherX>,
+    @SerializedName("weather")
+    val weatherx: List<WeatherX>,
    // val wind: Wind,
     @Embedded(prefix = "main_")
     val main: Main,

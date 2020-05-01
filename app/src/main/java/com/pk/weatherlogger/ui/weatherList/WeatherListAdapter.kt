@@ -2,6 +2,7 @@ package com.pk.weatherlogger.ui.weatherList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.pk.weatherlogger.R
@@ -18,21 +19,20 @@ class WeatherListAdapter(
     fun addToDataSet(value: WeatherEntry){
         if(!dataSet.contains(value)){
             dataSet.add(value)
-            notifyItemInserted(0)
+            notifyItemInserted(dataSet.size)
         }
     }
 
     fun clearAdapter(){
         dataSet.clear()
         notifyDataSetChanged()
-
     }
 
 
     class WeatherNode(itemView: CardView, val weatherListOnClickListener: WeatherListOnClickListener): RecyclerView.ViewHolder(itemView){
-        var cityName = itemView.city_name
-        var temperature = itemView.temperature
-        var date = itemView.date
+        var cityName: TextView = itemView.city_name
+        var temperature: TextView = itemView.temperature
+        var date: TextView = itemView.date
         fun bindListener(weatherEntry: WeatherEntry){
             itemView.setOnClickListener {
                 weatherListOnClickListener.onItemClick(weatherEntry)

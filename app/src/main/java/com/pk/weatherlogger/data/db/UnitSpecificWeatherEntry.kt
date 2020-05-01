@@ -1,5 +1,7 @@
 package com.pk.weatherlogger.data.db
 
+import com.pk.weatherlogger.data.db.entity.WeatherX
+
 interface UnitSpecificWeatherEntry {
     val cityName: String
     val temperature: Double
@@ -7,5 +9,6 @@ interface UnitSpecificWeatherEntry {
     val country: String
     val currentDate: String
     val unit:String
+    val weatherX : List<WeatherX>
 
 }

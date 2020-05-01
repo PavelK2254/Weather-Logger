@@ -10,7 +10,14 @@
     <TextView
         android:id="@+id/tv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Press the save button or pull the screen to refresh"
+        android:textAlignment="center"
+        android:visibility="gone"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        app:layout_constraintBottom_toBottomOf="@+id/swipeWidget"
+        app:layout_constraintTop_toTopOf="@+id/swipeWidget" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeWidget"
@@ -20,7 +27,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/weather_node"
         tools:itemCount="5" />

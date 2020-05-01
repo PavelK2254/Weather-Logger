@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cardview_light_background"
-    >
+    android:background="@color/darkBackgroundTransperent"
+    android:clickable="true"
+    android:focusable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,36 +18,67 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="2020-04-29"
-            android:layout_marginBottom="24dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+            android:textColor="@color/white_color"
+            android:textAlignment="center"
+            android:layout_marginTop="40dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/detail_cityname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/weather_node_margin"
             android:gravity="center_horizontal"
             android:text="Berlin,DE"
-            android:layout_marginTop="@dimen/weather_node_margin"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@color/white_color"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
-        <TextView
-            android:id="@+id/detail_temp"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="13.37 C"
-            android:textAlignment="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/detail_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:src="@drawable/ic_settings_black_24dp"
+                android:contentDescription="@string/weather_icon" />
+
+            <TextView
+                android:id="@+id/detail_temp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/white_color"
+                android:gravity="center_horizontal"
+                android:text="13.37 C"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display3" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/weather_condition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display3"
-            />
+            android:textColor="@color/white_color"
+            android:text="overcast clouds"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
         <TextView
             android:id="@+id/detail_feels_like"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white_color"
             android:text="Feels like: 12.5"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textAlignment="center"
-            android:gravity="center_horizontal" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.pk.weatherlogger.data.db
 
 import androidx.room.ColumnInfo
+import com.pk.weatherlogger.data.db.entity.WeatherX
 
 data class WeatherEntry(
     @ColumnInfo(name = "name")
@@ -16,7 +17,10 @@ data class WeatherEntry(
     override val currentDate: String,
 
     @ColumnInfo(name = "unit")
-    override val unit: String
+    override val unit: String,
+
+    @ColumnInfo(name = "weatherx")
+    override val weatherX: List<WeatherX>
 
 
 ):UnitSpecificWeatherEntry

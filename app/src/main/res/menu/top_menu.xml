@@ -4,7 +4,7 @@
     xmlns:compat="http://schemas.android.com/tools">
     <item
         android:id="@+id/menu_refresh"
-        android:icon="@drawable/ic_refresh_black_24dp"
+        android:icon="@drawable/ic_save_black_24dp"
         android:title="@string/menu_refresh"
         app:showAsAction="always" />
 
