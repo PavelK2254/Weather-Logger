@@ -6,6 +6,7 @@ import com.pk.weatherlogger.internal.NoConnectionException
 import okhttp3.Interceptor
 import okhttp3.Response
 
+@Suppress("DEPRECATION")
 class ConnectivityInterceptorImpl(
     context: Context
 ) : ConnectivityInterceptor {
@@ -18,7 +19,7 @@ class ConnectivityInterceptorImpl(
 
     private fun isOnline():Boolean {
         val connectivityManager = appContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        var networkInfo = connectivityManager.activeNetworkInfo
+        val networkInfo = connectivityManager.activeNetworkInfo
         return networkInfo != null && networkInfo.isConnected
     }
 }

@@ -31,6 +31,7 @@ class WeatherRepositoryImpl(
 
     init {
         openWeatherMapDataSource.downloadedWeather.observeForever { newWeatherList ->
+            if(newWeatherList == null)return@observeForever
             persistFetchedWeatherList(newWeatherList)
         }
 

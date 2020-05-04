@@ -5,9 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.pk.weatherlogger.data.db.entity.Weather
 import com.pk.weatherlogger.internal.NoConnectionException
+import retrofit2.HttpException
 
 class WeatherNetworkDataSourceImpl(
-    private val OpenWeatherAPI : OpenWeatherMapApiService
+    private val openWeatherAPI: OpenWeatherMapApiService,
+    private val networkErrorReporter: NetworkErrorReporter
 ) : WeatherNetworkDataSource {
     private val _downloadedWeather = MutableLiveData<Weather>()
     override val downloadedWeather: LiveData<Weather>
@@ -15,12 +17,15 @@ class WeatherNetworkDataSourceImpl(
 
     override suspend fun fetchWeatherData(location: String, temperatureUnits: String) {
         try {
-            val fetchedWeatherList = OpenWeatherAPI.getCurrentWeather(location,temperatureUnits)
+            val fetchedWeatherList = openWeatherAPI.getCurrentWeather(location, temperatureUnits)
                 .await()
             _downloadedWeather.postValue(fetchedWeatherList)
-        }
-        catch (e:NoConnectionException){
-            Log.e("Connectivity","No internet connection",e)
+        } catch (e: NoConnectionException) {
+            Log.e("Connectivity", "No internet connection", e)
+            networkErrorReporter.addErrorReport(e)
+        } catch (e: HttpException) {
+            Log.e("Http_Error", e.message())
+            networkErrorReporter.addErrorReport(e)
         }
     }
 }

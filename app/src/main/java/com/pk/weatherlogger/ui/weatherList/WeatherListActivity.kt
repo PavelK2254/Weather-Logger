@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.pk.weatherlogger.ui.weatherList
 
 import android.app.Activity
@@ -7,6 +9,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.size
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -14,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.pk.weatherlogger.R
 import com.pk.weatherlogger.data.db.WeatherEntry
 import com.pk.weatherlogger.data.db.entity.WeatherX
+import com.pk.weatherlogger.internal.NoConnectionException
 import com.pk.weatherlogger.ui.base.ScopedActivity
 import com.pk.weatherlogger.ui.detail.DetailFragment
 import com.pk.weatherlogger.ui.settings.SettingsActivity
@@ -23,6 +27,8 @@ import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
+import retrofit2.HttpException
+import java.net.ConnectException
 
 
 class WeatherListActivity : ScopedActivity(),WeatherListOnClickListener,KodeinAware {
@@ -50,11 +56,21 @@ class WeatherListActivity : ScopedActivity(),WeatherListOnClickListener,KodeinAw
 
     }
 
-    fun setupListeners(){
+    private fun setupListeners(){
         swipeWidget.setOnRefreshListener {
             launch { viewModel.updateWeatherValues() }
 
         }
+
+        viewModel.weatherErrors.observe(this, Observer {
+            swipeWidget.isRefreshing = false
+            when(it){
+                is NoConnectionException -> Toast.makeText(this,getString(R.string.noInternetConnection),Toast.LENGTH_SHORT).show()
+                is HttpException ->  Toast.makeText(this,getString(R.string.invalidLocation),Toast.LENGTH_SHORT).show()
+            }
+
+
+        })
 
     }
 

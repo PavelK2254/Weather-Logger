@@ -1,18 +1,24 @@
 package com.pk.weatherlogger.ui.weatherList
 
-import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pk.weatherlogger.R
+import com.pk.weatherlogger.data.network.NetworkErrorReporter
 import com.pk.weatherlogger.data.provider.LocationProvider
 import com.pk.weatherlogger.data.provider.UnitProvider
 import com.pk.weatherlogger.data.repository.WeatherRepository
+import com.pk.weatherlogger.internal.NoConnectionException
 import com.pk.weatherlogger.internal.lazyDeferred
+import retrofit2.HttpException
+import java.lang.Exception
 
 class WeatherListViewModel(
     private val weatherRepository: WeatherRepository,
+     networkErrorReporter: NetworkErrorReporter,
     unitProvider: UnitProvider,
     locationProvider: LocationProvider
 ) : ViewModel() {
@@ -25,6 +31,8 @@ class WeatherListViewModel(
     val weatherItem by lazyDeferred {
         weatherRepository.getWeatherList()
     }
+
+    val weatherErrors = networkErrorReporter.getErrorReport()
 
     suspend fun updateWeatherValues() {
         weatherRepository.updateWeather(location,unitSystem.name)
@@ -41,4 +49,7 @@ class WeatherListViewModel(
         fragmentTransaction.addToBackStack(null)
         return fragmentTransaction
     }
+
+
+
 }
