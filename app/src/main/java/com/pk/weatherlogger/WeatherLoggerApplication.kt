@@ -34,7 +34,7 @@ class WeatherLoggerApplication() : Application(), KodeinAware {
         bind<WeatherRepository>() with singleton { WeatherRepositoryImpl(instance(), instance()) }
         bind<UnitProvider>() with singleton { UnitProviderImpl(instance()) }
         bind<LocationProvider>() with singleton { LocationProviderImpl(instance()) }
-        bind() from provider { WeatherListVMFactory(instance(), instance(), instance(),instance()) }
+        bind() from provider { WeatherListVMFactory(instance(), instance(), instance(),instance(),instance()) }
 
     }
 

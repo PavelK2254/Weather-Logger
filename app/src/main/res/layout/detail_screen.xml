@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/darkBackgroundTransperent"
     android:clickable="true"
+    tools:ignore="HardcodedText"
     android:focusable="true">
 
     <LinearLayout
@@ -22,7 +23,8 @@
             android:textAlignment="center"
             android:layout_marginTop="40dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:gravity="center_horizontal" />
+            android:gravity="center_horizontal"
+             />
 
         <TextView
             android:id="@+id/detail_cityname"

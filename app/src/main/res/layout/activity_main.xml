@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="Press the save button or pull the screen to refresh"
+        android:text="@string/press_the_save_button_or_pull_the_screen_to_refresh"
         android:textAlignment="center"
         android:visibility="gone"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"

@@ -26,4 +26,5 @@
     <string name="weather_icon">weather_icon</string>
     <string name="noInternetConnection">No internet connection</string>
     <string name="invalidLocation">Weather location not found</string>
+    <string name="press_the_save_button_or_pull_the_screen_to_refresh">Press the save button or pull the screen to refresh</string>
 </resources>

@@ -7,6 +7,8 @@ import com.google.gson.annotations.SerializedName
 import org.threeten.bp.ZonedDateTime
 import java.util.*
 
+const val WEATHER_TABLE_ID = 0
+
 @Entity(tableName = "weather")
 data class Weather(
    // val base: String,
@@ -30,7 +32,7 @@ data class Weather(
     var unit:String
 ){
     @PrimaryKey(autoGenerate = true)
-    var id:Int = 0
+    var id:Int = WEATHER_TABLE_ID
 
     fun setDateAndUnit(currentUnit: String){
         currentDate = ZonedDateTime.now().toString().split("T")[0]
